@@ -90,7 +90,7 @@ class RoadsPreloadCommand extends Command
      */
     private function getSpatialIndexStream(): iterable
     {
-        $roads = Items::fromFile(storage_path('app/private/sofia_roads.json'));
+        $roads = Items::fromFile(database_path('seeders/data/sofia_roads.json'));
 
         foreach ($roads as $road) {
             for ($i = 0; $i < count($road) - 1; $i++) {
