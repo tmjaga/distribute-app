@@ -20,19 +20,9 @@ class DriverFactory extends Factory
      */
     public function definition(): array
     {
-        $locationService = app(MapLocation::class);
-
-        $restaurant = Restaurant::inRandomOrder()->first();
-
-        $lat = $restaurant->coordinates->getLat();
-        $lng = $restaurant->coordinates->getLng();
-
-        [$driverLat, $driverLng] = $locationService->randomMapLocation($lat, $lng);
-
         return [
             'name' => sprintf('%s %s', $this->faker->firstName(), $this->faker->lastName()),
             'restaurant_id' => null,
-            'current_coordinates' => new Point($driverLat, $driverLng),
             'capacity' => fake()->numberBetween(1, 4),
         ];
     }

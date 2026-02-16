@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\DriverDistributor;
+use App\Contracts\MapLocation;
 use App\Helpers\ColorHelper;
 use App\Models\Driver;
 use App\Models\Restaurant;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
+use TarfinLabs\LaravelSpatial\Types\Point;
 
 class MapController extends Controller
 {
@@ -21,7 +23,27 @@ class MapController extends Controller
     {
         // create randomised drivers
         Driver::truncate();
-        Driver::factory()->count(100)->create();
+        //Driver::factory()->count(10)->create();
+        //dd();
+        $locationService = app(MapLocation::class);
+
+        for ($i = 1; $i <= 100; $i++) {
+            $restaurant = Restaurant::inRandomOrder()->first();
+
+            $lat = $restaurant->coordinates->getLat();
+            $lng = $restaurant->coordinates->getLng();
+
+            [$driverLat, $driverLng] = $locationService->randomMapLocation($lat, $lng);
+
+            Driver::create([
+                'name' => sprintf('%s %s', fake()->firstName(), fake()->lastName()),
+                'restaurant_id' => null,
+                'current_coordinates' => new Point($driverLat, $driverLng),
+                'capacity' => fake()->numberBetween(1, 4),
+            ]);
+        }
+
+        //Driver::factory()->count(100)->create();
 
         // distribute drivers over restaurants
         $start = microtime(true);

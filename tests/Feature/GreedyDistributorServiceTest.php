@@ -17,11 +17,10 @@ beforeEach(function () {
         ->sequence(fn ($sequence) => [
             'orders_count' => $ordersCounts[$sequence->index],
             'coordinates' => new Point(
-                40.0 + $sequence->index * 0.01, // fixed coordinates
-                -74.0 + $sequence->index * 0.01
+                42.667122 + $sequence->index * 0.01, // fixed coordinates
+                23.281657 + $sequence->index * 0.01
             ),
-        ])
-        ->create();
+        ])->create();
 
     // 100 drivers with capacity, so total capacity almost covers all orders
     $capacities = array_merge(
@@ -40,11 +39,13 @@ beforeEach(function () {
                 $restaurant->coordinates->getLng() + rand(-5, 5) / 1000
             ),
         ]);
+
     }
 });
 
 it('greedy distributor leaves realistic orders_after', function () {
     $service = new GreedyDistributorService;
+
     $service->distribute();
 
     $restaurants = Restaurant::all();

@@ -20,8 +20,7 @@ beforeEach(function () {
                 40.0 + $sequence->index * 0.01, // fixed coordinates
                 -74.0 + $sequence->index * 0.01
             ),
-        ])
-        ->create();
+        ])->create();
 
     // 100 drivers with capacity, so total capacity almost covers all orders
     $capacities = array_merge(
