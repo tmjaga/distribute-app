@@ -6,6 +6,7 @@
 2. [Requirements](#requirements)
 3. [Installation](#installation)
 4. [Run Tests](#running-tests)
+5. [Used Packages](#used-packages)
 
 ## Overview
 The goal of this project is to simulate driver distribution and optimize their assignment to restaurants in a balanced and distance-efficient way.
@@ -33,7 +34,7 @@ Driver random location relative to a randomly selected restaurant is implemented
    - **-** Slowest method due to an API request for each call; does not consider road type and may place drivers on pedestrian-only roads
    - **Implemented:** `DriverOsrmLocationService.php`
 
-3. Coordinate selection using a preprocessed and preloaded Polyline road dataset (Map road segments data) JSON file loaded in Redis 
+3. Coordinate selection using a preprocessed and preloaded Polyline road dataset (Map road segments data) JSON file `(/database/seeders/data/sofia_roads.json)` loaded in Redis 
    - **+** Most accurate positioning method
    - **-** Requires additional system resources
    - **Implemented:** `DriverRoadsLocationService.php`
@@ -125,6 +126,9 @@ php artisan roads:preload  # Preload road from Polyline road dataset JSON file i
 ```
 
 ### 6. The application will be accessible at: http://localhost:8000
+On the start page, all restaurants will be displayed on the map.
+Click the "Place Drivers" button several times (wait for the data to load from the server.) to place drivers on the map and assign them to restaurants according to the specified conditions.
+A report with data about restaurants and drivers also will be provided.
 
 ## Running Tests
 
@@ -133,4 +137,14 @@ Inside distribute-app the container run
 ```bash
 php artisan test
 ```
+
+## Used Packages
+
+- [Laravel 12](https://laravel.com)
+- [Laravel Spatial](https://github.com/tarfin-labs/laravel-spatial) - laravel package to work with geospatial data types and functions.
+- [JSON Machine](https://github.com/halaxa/json-machine) - is an efficient, easy-to-use and fast JSON stream/pull/incremental/lazy (whatever you name it) parser
+- [msgpack.php](https://github.com/rybakit/msgpack.php) - a pure PHP implementation of the MessagePack serialization format.
+- [Leaflet](https://leafletjs.com) - open-source JavaScript library for mobile-friendly interactive maps.
+- [Leaflet.awesome-markers plugin](https://github.com/lennardv2/Leaflet.awesome-markers) - colorful iconic & retina-proof markers for Leaflet, based on the Glyphicons / Font-Awesome icons.
+
 
